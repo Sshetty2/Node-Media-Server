@@ -10,6 +10,7 @@ const NodeRtmpServer = require('./node_rtmp_server');
 const NodeHttpServer = require('./node_http_server');
 const NodeTransServer = require('./node_trans_server');
 const NodeRelayServer = require('./node_relay_server');
+const NodeAwsS3Server = require('./node_core_aws_s3');
 const context = require('./node_core_ctx');
 const Package = require("./package.json");
 
@@ -46,6 +47,15 @@ class NodeMediaServer {
       } else {
         this.nls = new NodeRelayServer(this.config);
         this.nls.run();
+      }
+    }
+
+    if (this.config.aws) {
+      if (this.config.cluster) {
+        Logger.log('NodeAwsS3Server does not work in cluster mode');
+      } else {
+        this.nass = new NodeAwsS3Server(this.config);
+        this.nass.run();
       }
     }
 

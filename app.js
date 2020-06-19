@@ -28,6 +28,9 @@ const config = {
     publish: false,
     secret: 'nodemedia2017privatekey'
   },
+  aws: {
+    port: 8002,
+  },
 };
 
 
